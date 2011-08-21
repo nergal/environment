@@ -1,5 +1,6 @@
 <?php
 	$header = 'Тестирование окружения';
+	$host = php_uname();
 
 	function check_extension($ext) {
 		$is = extension_loaded($ext);
@@ -226,7 +227,7 @@ if (PHP_SAPI !== 'cli'): ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//
 	
 	<?php echo $data; ?>
 	
-	<div id="footer"><p><b>Host:</b> <?php echo php_uname() ?></ul></div>
+	<div id="footer"><p><b>Host:</b> <?php echo $host; ?></ul></div>
 </body>
 </html>
 <?php else:
@@ -254,8 +255,8 @@ foreach ($checks as $title => $_checks) {
 		}
 		$out_end = (($result['is']) ? "\033[92m" : "\033[91m").strip_tags($result['message'])."\033[0m\n";
 		
-		$counts = $screen_width - mb_strlen($out.$out_end, 'UTF-8') + 10; // 10 - цвета
-		echo $out.str_repeat(' ', $counts).$out_end;
+		$counts = $screen_width - mb_strlen($out.$out_end, 'UTF-8') + 8; // 10 - цвета
+		echo $out.' '.str_repeat('.', abs($counts)).' '.$out_end;
 	}
 	
 	echo "\n";
@@ -265,6 +266,7 @@ echo str_repeat('-', $screen_width)."\n";
 echo "Всего тестов: {$total}\nОшибок: {$failed}\n";
 echo str_repeat('-', $screen_width)."\n";
 echo "NB: Конфигурация консольной и серверной версии php могут значительно отличаться!!!\n";
+echo "Host: {$host}\n";
 
 endif;
 ?>
