@@ -230,7 +230,11 @@ if (PHP_SAPI !== 'cli'): ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//
 </body>
 </html>
 <?php else:
-$screen_width = 167;
+if (function_exists('exec')) {
+	$screen_width = @exec('tput cols');
+} else {
+	$screen_width = 80;
+}
 
 echo "{$header}\n";
 echo str_repeat('=', mb_strlen($header, 'UTF-8'))."\n\n";
